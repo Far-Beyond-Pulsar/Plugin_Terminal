@@ -1,0 +1,28 @@
+[package]
+name = "editor_terminal"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+plugin_editor_api = { path = "../plugin_editor_api" }
+gpui.workspace = true
+ui.workspace = true
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+tracing.workspace = true
+
+# Terminal dependencies
+alacritty_terminal = { git = "https://github.com/zed-industries/alacritty.git", branch = "add-hush-login-flag" }
+portable-pty = "0.8"
+which = "6"
+libc = "0.2"
+anyhow = "1.0"
+smallvec = "1"
+futures = "0.3"
+itertools.workspace = true
+uuid = { version = "1.0", features = ["v4"] }
+smol.workspace = true
+parking_lot = "0.12"
