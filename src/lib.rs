@@ -27,8 +27,8 @@ struct EditorStorage {
 pub struct TerminalPlugin {
     editors: Arc<Mutex<HashMap<usize, EditorStorage>>>,
     next_editor_id: Arc<Mutex<usize>>,
-    // LEAK TEST: Large field to detect if TerminalPlugin instances are leaking (10MB)
-    leak_test: [u8; 10_000_000],
+    // LEAK TEST: Large field to detect if TerminalPlugin instances are leaking (500KB)
+    leak_test: [u8; 500_000],
 }
 
 impl Default for TerminalPlugin {
@@ -36,7 +36,7 @@ impl Default for TerminalPlugin {
         Self {
             editors: Arc::new(Mutex::new(HashMap::new())),
             next_editor_id: Arc::new(Mutex::new(0)),
-            leak_test: [0u8; 10_000_000],
+            leak_test: [0u8; 500_000],
         }
     }
 }
@@ -46,7 +46,7 @@ impl EditorPlugin for TerminalPlugin {
         PluginMetadata {
             id: PluginId::new("com.pulsar.terminal"),
             name: "Terminal".into(),
-            version: "0.1.0".into(),
+            version: "0.1.1".into(),
             author: "Pulsar".into(),
             description: "Integrated terminal emulator".into(),
         }
