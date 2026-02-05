@@ -463,7 +463,7 @@ pub struct Terminal {
     active_session: usize,
     next_session_id: usize,
     // LEAK TEST: Large field to detect if Terminal instances are leaking (10MB)
-    leak_test: [u8; 10_000_000],
+    leak_test: [u8; 500_000],
 }
 
 impl Terminal {
