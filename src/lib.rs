@@ -27,6 +27,8 @@ struct EditorStorage {
 pub struct TerminalPlugin {
     editors: Arc<Mutex<HashMap<usize, EditorStorage>>>,
     next_editor_id: Arc<Mutex<usize>>,
+    // LEAK TEST: Large field to detect if TerminalPlugin instances are leaking (10MB)
+    leak_test: [u8; 10_000_000],
 }
 
 impl Default for TerminalPlugin {
@@ -34,6 +36,7 @@ impl Default for TerminalPlugin {
         Self {
             editors: Arc::new(Mutex::new(HashMap::new())),
             next_editor_id: Arc::new(Mutex::new(0)),
+            leak_test: [0u8; 10_000_000],
         }
     }
 }
@@ -84,7 +87,7 @@ impl EditorPlugin for TerminalPlugin {
         window: &mut Window,
         cx: &mut App,
         logger: &EditorLogger,
-    ) -> Result<(Arc<dyn PanelView>, Box<dyn EditorInstance>), PluginError> {
+    ) -> Result<(std::sync::Weak<dyn PanelView>, Box<dyn EditorInstance>), PluginError> {
         logger.info("Creating terminal editor");
         
         if editor_id.as_str() == "terminal-editor" {
@@ -115,7 +118,7 @@ impl EditorPlugin for TerminalPlugin {
 
             tracing::info!("Created terminal editor instance {}", id);
 
-            Ok((panel_arc, wrapper))
+            Ok((Arc::downgrade(&panel_arc), wrapper))
         } else {
             Err(PluginError::EditorNotFound { editor_id })
         }

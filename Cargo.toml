@@ -7,12 +7,12 @@ edition = "2021"
 crate-type = ["cdylib"]
 
 [dependencies]
-plugin_editor_api = { path = "../plugin_editor_api" }
-gpui.workspace = true
-ui.workspace = true
+gpui = { git = "https://github.com/tristanpoland/zed", rev="2047043a00dc138e3d8127c8921c96927acea8f8", features = ["runtime_shaders", "macos-blade"] }
+plugin_editor_api = { git = "https://github.com/Far-Beyond-Pulsar/Pulsar-Native", rev = "ce3078c9e56241e122f3b73ae52e114b7fdba53d" }
+ui = { git = "https://github.com/Far-Beyond-Pulsar/Pulsar-Native", rev = "ce3078c9e56241e122f3b73ae52e114b7fdba53d" }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
-tracing.workspace = true
+tracing = "0.1.41"
 
 # Terminal dependencies
 alacritty_terminal = { git = "https://github.com/zed-industries/alacritty.git", branch = "add-hush-login-flag" }
@@ -22,7 +22,7 @@ libc = "0.2"
 anyhow = "1.0"
 smallvec = "1"
 futures = "0.3"
-itertools.workspace = true
+itertools = "0.13"
 uuid = { version = "1.0", features = ["v4"] }
-smol.workspace = true
+smol = "1"
 parking_lot = "0.12"

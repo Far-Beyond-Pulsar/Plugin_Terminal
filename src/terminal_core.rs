@@ -462,6 +462,8 @@ pub struct Terminal {
     sessions: Vec<TerminalSession>,
     active_session: usize,
     next_session_id: usize,
+    // LEAK TEST: Large field to detect if Terminal instances are leaking (10MB)
+    leak_test: [u8; 10_000_000],
 }
 
 impl Terminal {
@@ -472,6 +474,7 @@ impl Terminal {
             sessions: Vec::new(),
             active_session: 0,
             next_session_id: 0,
+            leak_test: [0u8; 10_000_000],
         };
 
         // Create initial session and get events channel
